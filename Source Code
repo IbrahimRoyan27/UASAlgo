@@ -1,0 +1,166 @@
+data_produk = {
+    1: "Processor Intel Core I3 10105F",
+    2: "Adata SSD SU650 Ultimate 240GB Sata 3",
+    3: "Corsair CV650 Power Supply 650W",
+    4: "VGA Colorful Geforce GTX 1650 EX 4 GB GDDR6",
+    5: "Motherboard ASUS PRIME H510M-K",
+}
+daftar_harga = {
+    1: 1180000,
+    2: 357000,
+    3: 920000,
+    4: 2180000,
+    5: 985000,
+}
+
+metode_pembayaran = {
+    1: "Transfer Bank BCA",
+    2: "Gopay",
+    3: "Kartu Kredit",
+    4: "Indomaret",
+}
+
+
+pilihan_produk = []
+
+while True:
+    toko = input('Masukkan nama toko: ')
+    
+    if toko.lower() == 'jaya pc':
+        print("\nJaya PC\n")
+
+        for i in data_produk:
+            id_produk = f"Id Product : {i}"
+            nama_produk = f"Nama Produk : {data_produk[i]}"
+            harga_produk = f"Harga Produk : {daftar_harga[i]:,}"  
+            print(id_produk.ljust(20), nama_produk.ljust(60), harga_produk)
+        break
+    else:
+        print('Toko tidak ditemukan. Silakan coba lagi.')
+lagi = 'ya'
+
+while lagi.lower() == 'ya':
+
+    while True:
+            pilih_produk = int(input("Pilih produk dengan memasukkan ID produk: "))
+            if pilih_produk not in data_produk:
+                print("ID produk tidak valid. Silakan pilih produk yang sesuai.")
+                continue
+            produk_dipilih = data_produk[pilih_produk]
+            break
+        
+
+    print(f"Anda telah memilih: {produk_dipilih}")
+
+    banyak = 0
+    while banyak <= 0:
+            banyak = int(input("Masukkan jumlah produk yang ingin dibeli: "))
+            if banyak <= 0:
+                print("Jumlah produk harus lebih dari 0.")
+                continue
+            
+            produk_dipilih = data_produk[pilih_produk]
+            pilihan_produk.append((produk_dipilih, pilih_produk, banyak))
+            
+            lagi = input("Apakah Anda ingin memilih produk lagi? (ya/tidak): ").lower()
+            if lagi != 'ya':
+                break
+        
+
+
+print("\nKeranjang :")
+for produk, id_produk, jumlah in pilihan_produk:
+    print(f"Produk: {produk}")
+    print(f"Jumlah: {jumlah}")
+    print(f"Total Harga: {daftar_harga[id_produk] * jumlah:,}")
+        
+print("\nMasukkan data penerima")
+nama_penerima = input("Nama Penerima: ")
+nomor_telepon = input("Nomor Telepon: ")
+alamat_penerima = input("Alamat Penerima: ")
+
+
+pilih_kurir = {
+    1: {"nama": "JNE", "tarif": 10000},
+    2: {"nama": "TIKI", "tarif": 9000},
+    3: {"nama": "AnterAja", "tarif": 11000},
+}
+
+print("\nPilih Kurir Pengiriman (Reguler):")
+for jenis_kurir, info_kurir in pilih_kurir.items():
+    print(f"{jenis_kurir}. {info_kurir['nama']} - Tarif: Rp {info_kurir['tarif']}")
+
+tarif_kurir = 0
+nama_kurir_terpilih = None
+
+while True:
+    nomor_kurir = int(input("Masukkan nomor kurir yang dipilih: "))
+    if nomor_kurir not in pilih_kurir:
+        print("Nomor kurir tidak valid. Silakan pilih nomor kurir yang sesuai.")
+    else:
+        kurir_dipilih = pilih_kurir[nomor_kurir]
+        nama_kurir_terpilih = kurir_dipilih['nama']
+        print(f"Anda memilih kurir {kurir_dipilih['nama']} dengan tarif Rp {kurir_dipilih['tarif']}")
+        tarif_kurir += kurir_dipilih['tarif']
+        break
+
+print(f"Anda telah memilih kurir: {nama_kurir_terpilih}")
+
+
+total_harga = daftar_harga[pilih_produk] * banyak
+
+
+total_hargakurir = sum(daftar_harga[id_produk] * jumlah for _, id_produk, jumlah in pilihan_produk)
+total_hargakurirr = total_hargakurir + tarif_kurir
+
+
+print("\nRingkasan Pesanan:")
+for produk, id_produk, jumlah in pilihan_produk:
+    print(f"Produk: {produk}")
+    print(f"Jumlah: {jumlah}")
+    print(f"Total Harga: {daftar_harga[id_produk] * jumlah:,}")
+
+print("\nData Penerima:")
+print(f"Nama: {nama_penerima}")
+print(f"Alamat: {alamat_penerima}")
+print(f"Nomor Telepon: {nomor_telepon}")
+
+print(f"\nBiaya Pengiriman ({nama_kurir_terpilih}): {tarif_kurir:,}")
+print(f"Total Belanja: {total_hargakurirr:,}")
+
+
+
+print("\nPilih Metode Pembayaran:")
+for bayar, cara_bayar in metode_pembayaran.items():
+    print(f"{bayar}. {cara_bayar}")
+
+while True:
+        id_pembayar = int(input("Masukkan nomor metode pembayaran yang dipilih: "))
+        if id_pembayar not in metode_pembayaran:
+            print("Nomor metode pembayaran tidak valid. Silakan pilih nomor metode pembayaran yang sesuai.")
+            continue
+        metode_pembayaran2 = metode_pembayaran[id_pembayar]
+        break
+
+print("\nRingkasan Pesanan:")
+for produk, id_produk, jumlah in pilihan_produk:
+    print(f"Produk: {produk}")
+    print(f"Jumlah: {jumlah}")
+    print(f"Total Harga: {daftar_harga[id_produk] * jumlah:,}")
+
+print("\nData Penerima:")
+print(f"Nama: {nama_penerima}")
+print(f"Alamat: {alamat_penerima}")
+print(f"Nomor Telepon: {nomor_telepon}")
+#print("Metode Pembayaran: ", metode_pembayaran2)
+print(f"\nBiaya Pengiriman ({nama_kurir_terpilih}): {tarif_kurir:,}")
+print(f"Total Belanja: {total_hargakurirr:,}")
+
+
+confirmation = input("\nBayar (ya/tidak): ")
+
+if confirmation.lower() == "ya":
+    print(f"\nBelanja sebesar {total_hargakurirr:,} berhasil!")
+    print("Terima kasih atas pesanan Anda. Harap menunggu penjual mengkonfirmasi pesanan")
+else:
+    print("\nPembelian dibatalkan.")
